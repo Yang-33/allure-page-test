@@ -1,6 +1,8 @@
 name: Test
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
 
 jobs:
   test:
@@ -40,8 +42,5 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PUBLISH_BRANCH: gh-pages
           PUBLISH_DIR: allure-history
-      - name: генерируем summery файл
-        run: ./gradlew allureReport
-      - name: отправляем отчет в тг
-        run: java "-DconfigFile=notification/telegram.json" -jar notification/allure-notifications-4.6.1.jar
-
+      # - name: генерируем summery файл
+      #   run: ./gradlew allureReport
