@@ -17,8 +17,8 @@ glob(xmlPattern, (err, files) => {
                 const failedTests = testCases.filter(test => test.failure);
 
                 const summary = failedTests.slice(0, maxEntries).map(test => ({
-                    name: test.$.name,
-                    time: test.$.time
+                    name: `${test.$.classname} - ${test.$.name}`,
+                    time: `${Math.floor(test.$.time / 60000)}m ${Math.ceil((test.$.time % 60000) / 100) / 10}s`,
                 }));
 
                 console.log(JSON.stringify(summary));  // JSON形式で出力
