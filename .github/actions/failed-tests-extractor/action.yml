@@ -11,7 +11,7 @@ inputs:
   xml_pattern:
     description: 'Glob pattern for finding XML files'
     required: true
-    default: 'build/test-reports/test/**/*.xml'
+    default: 'build/test-results/test/**/*.xml'
 
 outputs:
   failed_tests:
