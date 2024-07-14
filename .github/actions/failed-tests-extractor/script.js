@@ -4,7 +4,7 @@ const glob = require('glob');
 const parser = new xml2js.Parser();
 
 const maxEntries = process.env.MAX_ENTRIES ? parseInt(process.env.MAX_ENTRIES, 10) : 20;
-const xmlPattern = process.env.XML_PATTERN || 'build/test-reports/test/**/TEST-*.xml';
+const xmlPattern = process.env.XML_PATTERN || 'build/test-reports/test/**/*.xml';
 
 glob(xmlPattern, (err, files) => {
     if (err) throw err;

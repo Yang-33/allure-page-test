@@ -38,7 +38,7 @@ jobs:
 
       - name: check output
         if: success() || failure()
-        run: echo "${{ steps.failed-tests-extractor.outputs.failed_tests }}"
+        run: echo "${{ env.failed_tests }}"
 
       - uses: actions/upload-artifact@v4
         if: success() || failure()

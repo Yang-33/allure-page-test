@@ -11,7 +11,7 @@ inputs:
   xml_pattern:
     description: 'Glob pattern for finding XML files'
     required: true
-    default: 'build/test-reports/test/**/TEST-*.xml'
+    default: 'build/test-reports/test/**/*.xml'
 
 outputs:
   failed_tests:
@@ -33,12 +33,8 @@ runs:
         echo "MAX_ENTRIES=${{ inputs.max_entries }}" >> $GITHUB_ENV
         echo "XML_PATTERN=${{ inputs.xml_pattern }}" >> $GITHUB_ENV
       shell: bash
-    - name: Run script
-      run: node script.js
-      shell: bash
-      working-directory: ./.github/actions/failed-tests-extractor
     - name: Output results
       id: results
-      run: echo "::set-output name=failed_tests::$(node script.js)"
+      run: echo "failed_tests=$(node script.js)" >> $GITHUB_ENV
       shell: bash
       working-directory: ./.github/actions/failed-tests-extractor
