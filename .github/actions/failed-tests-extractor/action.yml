@@ -1,0 +1,46 @@
+name: 'Setup and Run Node.js App'
+description: 'Setup Node.js and run a script'
+inputs:
+  node-version:
+    description: 'Node.js version to set up'
+    required: true
+  cache:
+    description: 'Whether to cache npm modules'
+    required: false
+    default: 'npm'
+  cache-dependency-path:
+    description: 'Path to the package-lock.json or package.json for caching'
+    required: false
+    default: 'package-lock.json'
+  max_entries:
+    description: 'Maximum number of failed tests to output'
+    required: false
+    default: '20'
+  xml_pattern:
+    description: 'Glob pattern for finding XML files'
+    required: true
+    default: 'build/reports/tests/**/TEST-*.xml'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: ${{ inputs.cache }}
+        cache-dependency-path: ${{ inputs.cache-dependency-path }}
+    - name: Install dependencies
+      run: npm ci
+      shell: bash
+    - name: Set Environment Variables
+      run: |
+        echo "MAX_ENTRIES=${{ inputs.max_entries }}" >> $GITHUB_ENV
+        echo "XML_PATTERN=${{ inputs.xml_pattern }}" >> $GITHUB_ENV
+    - name: Run script
+      run: node script.js
+      shell: bash
+    - name: Output results
+      id: results
+      run: echo "::set-output name=failed_tests::$(node notify.js)"
+      shell: bash
