@@ -20,6 +20,10 @@ jobs:
       - name: test
         run: ./gradlew clean tests_on_selenoid -Dbrowser_version="100.0" -Dbrowser_size="1920x1080" -Dbrowser_host="selenoid.autotests.cloud/wd/hub"
 
+      - name: check build directory
+        if: success() || failure()
+        run: ls -la build
+
       - name: Report failed tests
         if: success() || failure()
         id: failed-tests-extractor
