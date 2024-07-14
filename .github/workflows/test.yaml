@@ -35,5 +35,3 @@ jobs:
     with:
       results-artifact-name: beta-test-results-${{ github.run_id }}
       env: beta
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
