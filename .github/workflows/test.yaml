@@ -41,3 +41,5 @@ jobs:
           publish_dir: ./allure-history/beta
           destination_dir: ./beta
           keep_files: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'

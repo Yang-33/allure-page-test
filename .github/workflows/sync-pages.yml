@@ -21,3 +21,5 @@ jobs:
         publish_branch: gh-pages
         publish_dir: ./pages
         keep_files: true
+        user_name: 'github-actions[bot]'
+        user_email: 'github-actions[bot]@users.noreply.github.com'
