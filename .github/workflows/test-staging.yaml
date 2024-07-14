@@ -1,4 +1,4 @@
-name: Test
+name: STAGING Test
 
 on:
   workflow_dispatch:
