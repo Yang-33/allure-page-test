@@ -25,6 +25,7 @@ jobs:
           ref: gh-pages
           path: gh-pages
       - name: Extract repository name
+        if: success() || failure()
         run: echo "REPOSITORY_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
       - uses: simple-elf/allure-report-action@58e6590adf6d8f196a0d771bf8a00e6921086a62 # v1.9
         if: success() || failure()
