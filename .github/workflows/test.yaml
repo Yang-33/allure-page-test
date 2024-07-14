@@ -27,7 +27,7 @@ jobs:
         if: success() || failure()
         with:
           gh_pages: gh-pages
-          subfolder: beta
+          subfolder: beta  # final result is in allure-history/beta
           allure_results: build/allure-results
           allure_report: allure-report
           allure_history: allure-history
@@ -40,3 +40,4 @@ jobs:
           publish_branch: gh-pages
           publish_dir: allure-history
           # destination_dir: beta
+          keep_files: true
