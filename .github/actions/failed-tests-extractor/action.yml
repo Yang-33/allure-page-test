@@ -13,6 +13,10 @@ inputs:
     required: true
     default: 'build/reports/tests/**/TEST-*.xml'
 
+outputs:
+  failed_tests:
+    description: 'JSON formatted summary of failed tests'
+
 runs:
   using: 'composite'
   steps:
@@ -35,5 +39,5 @@ runs:
       working-directory: ./.github/actions/failed-tests-extractor
     - name: Output results
       id: results
-      run: echo "::set-output name=failed_tests::$(node notify.js)"
+      run: echo "::set-output name=failed_tests::$(node script.js)"
       shell: bash
