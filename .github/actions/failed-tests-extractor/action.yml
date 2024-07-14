@@ -41,3 +41,4 @@ runs:
       id: results
       run: echo "::set-output name=failed_tests::$(node script.js)"
       shell: bash
+      working-directory: ./.github/actions/failed-tests-extractor
