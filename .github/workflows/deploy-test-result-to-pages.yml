@@ -1,7 +1,7 @@
 name: Deploy test result to GitHub Pages
 
 on:
-  dispatch_workflow:
+  workflow_dispatch:
     inputs:
       results-artifact-name:
         description: 'The name of the artifact to download e.g. `beta-test-results-$<RUN_ID>`'
