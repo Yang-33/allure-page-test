@@ -22,7 +22,12 @@ jobs:
 
       - name: Report failed tests
         if: success() || failure()
+        id: failed-tests-extractor
         uses: ./.github/actions/failed-tests-extractor
+
+      - name: check output
+        if: success() || failure()
+        run: echo "${{ steps.failed-tests-extractor.outputs.failed_tests }}"
 
       - uses: actions/upload-artifact@v4
         if: success() || failure()
