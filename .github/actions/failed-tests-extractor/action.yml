@@ -33,6 +33,14 @@ runs:
         echo "MAX_ENTRIES=${{ inputs.max_entries }}" >> $GITHUB_ENV
         echo "XML_PATTERN=${{ inputs.xml_pattern }}" >> $GITHUB_ENV
       shell: bash
+    - name: Output results (debug)
+      id: results-debug
+      run: enode .github/actions/failed-tests-extractor/script.js
+      shell: bash
+      working-directory: ${{ github.workspace }} # スクリプト実行ディレクトリをプロジェクトのルートに設定
+      env:
+        NODE_PATH: ${{ github.workspace }}/.github/actions/failed-tests-extractor/node_modules
+
     - name: Output results
       id: results
       run: echo "failed_tests=$(node .github/actions/failed-tests-extractor/script.js)" >> $GITHUB_ENV
