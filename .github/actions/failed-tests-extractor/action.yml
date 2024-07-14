@@ -37,6 +37,7 @@ runs:
       run: |
         echo "MAX_ENTRIES=${{ inputs.max_entries }}" >> $GITHUB_ENV
         echo "XML_PATTERN=${{ inputs.xml_pattern }}" >> $GITHUB_ENV
+      shell: bash
     - name: Run script
       run: node script.js
       shell: bash
