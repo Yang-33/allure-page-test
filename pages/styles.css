@@ -44,6 +44,14 @@ header h1 {
     background-color: #0056b3;
 }
 
+.staging-button {
+    background-color: #f90;
+}
+
+.staging-button:hover {
+    background-color: #e80;
+}
+
 .badge {
     display: block;
     width: 100%;
@@ -90,5 +98,4 @@ footer a.btn:hover {
 footer img {
     margin-right: 8px;
     vertical-align: middle;
-    /* アイコンとテキストを中央揃えにする */
 }
