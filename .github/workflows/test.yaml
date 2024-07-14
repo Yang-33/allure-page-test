@@ -26,15 +26,17 @@ jobs:
         continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages/beta
+          path: gh-pages
       - name: генерируем отчет
         uses: simple-elf/allure-report-action@master
         if: always()
         with:
-          gh_pages: gh-pages/beta
+          gh_pages: gh-pages
+          subfolder: beta
           allure_results: build/allure-results
           allure_report: allure-report
-          allure_history: beta/allure-history
+          allure_history: allure-history
+          # TODO: Use report_url {{ report_url }}/4/index.html
       - name: публикуем отчет
         uses: peaceiris/actions-gh-pages@v2
         if: always()
