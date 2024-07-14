@@ -1,0 +1,94 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header h1 {
+    color: #0275d8;
+}
+
+.links {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    /* Allows items to wrap to the next line */
+    margin-top: 20px;
+}
+
+.link-container {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 30%;
+    margin: 10px;
+    /* Adds spacing around each container */
+    max-width: 300px;
+    /* Maximum width of each container */
+    flex: 1 1 300px;
+    /* Flex item grows and shrinks but starts at 300px */
+}
+
+.button {
+    display: block;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.badge {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    /* Ensures badges do not overflow */
+    height: auto;
+    /* Maintains aspect ratio of images */
+}
+
+img {
+    max-width: 100%;
+    /* Ensures images do not exceed the container width */
+    height: auto;
+    /* Keeps the aspect ratio intact */
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e7e7e7;
+    margin-top: 40px;
+}
+
+footer p {
+    font-size: 16px;
+    color: #333;
+}
+
+footer a.btn {
+    color: white;
+    background-color: #007bff;
+    border-color: #007bff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+footer a.btn:hover {
+    background-color: #0056b3;
+    border-color: #0050a0;
+}
+
+footer img {
+    margin-right: 8px;
+    vertical-align: middle;
+    /* アイコンとテキストを中央揃えにする */
+}
