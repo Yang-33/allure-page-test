@@ -23,6 +23,7 @@ runs:
     - name: Install dependencies
       run: npm ci
       shell: bash
+      working-directory: ./.github/actions/failed-tests-extractor
     - name: Set Environment Variables
       run: |
         echo "MAX_ENTRIES=${{ inputs.max_entries }}" >> $GITHUB_ENV
@@ -31,6 +32,7 @@ runs:
     - name: Run script
       run: node script.js
       shell: bash
+      working-directory: ./.github/actions/failed-tests-extractor
     - name: Output results
       id: results
       run: echo "::set-output name=failed_tests::$(node notify.js)"
