@@ -1,0 +1,72 @@
+name: Deploy test result to GitHub Pages
+
+on:
+  dispatch_workflow:
+    inputs:
+      results-artifact-name:
+        description: 'The name of the artifact to download e.g. `beta-test-results-$<RUN_ID>`'
+        required: true
+        type: string
+      env:
+        description: 'Test environment.'
+        required: true
+        type: choice
+        options:
+          - beta
+          - staging
+  workflow_call:
+    inputs:
+      results-artifact-name:
+        required: true
+        type: string
+      env:
+        required: true
+        type: string
+    secrets:
+      GITHUB_TOKEN:
+        required: true
+
+concurrency:
+  group: push-to-gh-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.results-artifact-name }}
+          path: build/allure-results
+
+      - name: Checkout gh-pages to get history
+        uses: actions/checkout@v3
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Extract repository name
+        run: echo "REPOSITORY_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+
+      - uses: simple-elf/allure-report-action@58e6590adf6d8f196a0d771bf8a00e6921086a62 # v1.9
+        with:
+          gh_pages: gh-pages
+          subfolder: ${{ inputs.env }} # final result is in allure-history/${{ inputs.env }}
+          allure_results: build/allure-results
+          allure_report: allure-report
+          allure_history: allure-history
+          report_url: https://${{ github.repository_owner }}.github.io/${{ env.REPOSITORY_NAME }}/${{ inputs.env }}
+          github_server_url: ${{ github.server_url }}
+          keep_reports: 20
+
+      - name: Build and deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./allure-history${{ inputs.env }}
+          destination_dir: ./${{ inputs.env }}
+          keep_files: false
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
