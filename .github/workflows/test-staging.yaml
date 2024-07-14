@@ -35,5 +35,3 @@ jobs:
     with:
       results-artifact-name: staging-test-results-${{ github.run_id }}
       env: staging
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
