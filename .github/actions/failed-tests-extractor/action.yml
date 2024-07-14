@@ -35,7 +35,7 @@ runs:
       shell: bash
     - name: Output results
       id: results
-      run: echo "failed_tests=$(node script.js)" >> $GITHUB_ENV
+      run: echo "failed_tests=$(node .github/actions/failed-tests-extractor/script.js)" >> $GITHUB_ENV
       shell: bash
       working-directory: ${{ github.workspace }} # スクリプト実行ディレクトリをプロジェクトのルートに設定
       env:
