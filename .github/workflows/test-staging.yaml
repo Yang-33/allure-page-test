@@ -6,6 +6,9 @@ on:
 
 jobs:
   test:
+    concurrency:
+      group: staging-test
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +23,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         if: success() || failure()
         with:
-          name: staging-test-results
+          name: staging-test-results-${{ github.run_id }}
           path: build/allure-results
 
   deploy:
@@ -33,7 +36,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: staging-test-results
+          name: staging-test-results-${{ github.run_id }}
           path: build/allure-results
 
       - name: checkout gh-pages to get history
