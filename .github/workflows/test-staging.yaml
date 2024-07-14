@@ -33,7 +33,7 @@ jobs:
           allure_history: allure-history
           # TODO: Set report_url: domain/path/<env>. finally url is {{ report_url }}/4/index.html
       - name: Build and deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v2 # v4.0.0
+        uses: peaceiris/actions-gh-pages@v3 # v4.0.0
         if: success() || failure()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
