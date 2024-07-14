@@ -23,11 +23,12 @@ jobs:
           name: staging-test-results
           path: build/allure-results
 
-  upload:
+  deploy:
     concurrency:
       group: push-to-gh-pages
       cancel-in-progress: false
     runs-on: ubuntu-latest
+    if: success() || failure()
     needs: test
     steps:
       - uses: actions/download-artifact@v3
