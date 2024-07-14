@@ -35,7 +35,7 @@ jobs:
       - name: Build and deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3 # v4.0.0
         if: success() || failure()
-        env:
+        with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: allure-history
