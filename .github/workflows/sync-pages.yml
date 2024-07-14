@@ -12,7 +12,7 @@ jobs:
     concurrency:
       group: push-to-gh-pages
       cancel-in-progress: false
-    runs-on: ubuntu-latesti
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
 
