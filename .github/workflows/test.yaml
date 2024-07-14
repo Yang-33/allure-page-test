@@ -28,7 +28,7 @@ jobs:
       group: push-to-gh-pages
       cancel-in-progress: false
     runs-on: ubuntu-latest
-    if: always()
+    if: success() || failure()
     needs: test
     steps:
       - uses: actions/download-artifact@v3
