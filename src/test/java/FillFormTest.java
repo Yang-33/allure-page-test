@@ -16,6 +16,11 @@ public class FillFormTest {
         Configuration.pageLoadTimeout = 1200000;
     }
 
+    @Test
+    void hoge() {
+        throw new RuntimeException("hoge");
+    }
+
 
     @Test
     void successfulSearchTest() {
