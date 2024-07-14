@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       results-artifact-name:
-        description: 'The name of the artifact to download e.g. `beta-test-results-$<RUN_ID>`'
+        description: 'The name of the artifact to download e.g. `beta-test-results-$<RUN_NUMBER>`'
         required: true
         type: string
       env:

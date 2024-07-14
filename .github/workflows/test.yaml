@@ -23,7 +23,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
-          name: beta-test-results-${{ github.run_id }}
+          name: beta-test-results-${{ github.run_number }}
           path: build/allure-results
           retention-days: 1
           if-no-files-found: error
@@ -33,5 +33,5 @@ jobs:
     if: success() || failure()
     uses: ./.github/workflows/deploy-test-result-to-pages.yml
     with:
-      results-artifact-name: beta-test-results-${{ github.run_id }}
+      results-artifact-name: beta-test-results-${{ github.run_number }}
       env: beta
