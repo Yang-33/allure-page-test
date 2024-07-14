@@ -35,7 +35,7 @@ runs:
       shell: bash
     - name: Output results (debug)
       id: results-debug
-      run: enode .github/actions/failed-tests-extractor/script.js
+      run: node .github/actions/failed-tests-extractor/script.js
       shell: bash
       working-directory: ${{ github.workspace }} # スクリプト実行ディレクトリをプロジェクトのルートに設定
       env:
