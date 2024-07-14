@@ -22,7 +22,7 @@ jobs:
 
       - name: Report failed tests
         if: success() || failure()
-        uses: ./github/actions/failed-tests-extractor
+        uses: ./.github/actions/failed-tests-extractor
 
       - uses: actions/upload-artifact@v4
         if: success() || failure()
