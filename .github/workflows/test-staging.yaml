@@ -24,6 +24,14 @@ jobs:
         if: success() || failure()
         run: ls -la build
 
+      - name: check build directory
+        if: success() || failure()
+        run: ls -la build/test-results
+
+      - name: check build directory
+        if: success() || failure()
+        run: ls -la build/test-results/test
+
       - name: Report failed tests
         if: success() || failure()
         id: failed-tests-extractor
