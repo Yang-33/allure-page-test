@@ -22,9 +22,6 @@ on:
       env:
         required: true
         type: string
-    secrets:
-      GITHUB_TOKEN:
-        required: true
 
 concurrency:
   group: push-to-gh-pages
