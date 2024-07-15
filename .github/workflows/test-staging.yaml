@@ -11,6 +11,9 @@ jobs:
       cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
+      - name: Set start_time
+        id: start_time
+        run: echo "start_time=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
@@ -24,6 +27,7 @@ jobs:
         if: success() || failure()
         uses: ./.github/actions/slack
         with:
+          start-time: ${{ steps.start_time.outputs.start_time }}
           channel-id: 'notify-test'
           status: ${{ steps.test.outcome }}
           title: 'Test results STAGING'

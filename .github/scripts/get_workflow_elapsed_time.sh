@@ -1,14 +1,10 @@
 #!/bin/bash
 
-RUN_ID=$1
+STARTED_AT=$1
 
-echo "Run ID: $RUN_ID"
-
+echo "Started At: $STARTED_AT"
 CURRENT_TIME=$(date -u +"%Y-%m-%dT%H:%M:%SZ") ## `updatedAt` doesn't work as expected.
 echo "Current Time: $CURRENT_TIME"
-
-STARTED_AT=$(gh run view $RUN_ID --json startedAt | jq -r '.startedAt')
-echo "Started At: $STARTED_AT"
 
 STARTED_SEC=$(date -d "$STARTED_AT" +%s)
 CURRENT_SEC=$(date -d "$CURRENT_TIME" +%s)

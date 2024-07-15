@@ -3,6 +3,10 @@ description: 'Send custom JSON data to Slack workflow'
 
 
 inputs:
+  start-time:
+    description: "Start time of the workflow"
+    required: true
+    type: string
   channel-id:
     description: "Slack channel ID"
     required: true
@@ -50,7 +54,7 @@ runs:
         echo "SHORT_BEFORE=$(echo ${{ github.event.before }} | cut -c1-8)" >> $GITHUB_OUTPUT
         echo "SHORT_AFTER=$(echo ${{ github.event.after }} | cut -c1-8)" >> $GITHUB_OUTPUT
         echo "REPOSITORY_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 2)" >> $GITHUB_OUTPUT
-        .github/scripts/get_workflow_elapsed_time.sh ${{ github.run_id }}
+        .github/scripts/get_workflow_elapsed_time.sh ${{ inputs.start-time }}
       env:
         GITHUB_TOKEN: ${{ inputs.github-token }}
 
