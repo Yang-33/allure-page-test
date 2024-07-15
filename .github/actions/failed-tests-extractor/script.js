@@ -17,9 +17,10 @@ async function processFile(file) {
     const skippedTests = testCases.filter(test => test.skipped);
     const successfulTests = testCases.length - failedTests.length - skippedTests.length;
 
-    const failuresDetails = failedTests.slice(0, maxEntries).map(test => {
+    const failuresDetails = failedTests.map(test => {
         const time = parseFloat(test.$.time);
-        const timeFormatted = time >= 60 ? `${Math.floor(time / 60)} min ${Math.round(time % 60)} sec`
+        const timeFormatted = time >= 60 ?
+            `${Math.floor(time / 60)} min ${Math.round(time % 60)} sec`
             : `${time.toFixed(2)} sec`;
         return { name: `${test.$.classname} - ${test.$.name}`, time: timeFormatted };
     });
@@ -42,7 +43,7 @@ async function summarizeResults() {
         totalSuccessful: acc.totalSuccessful + curr.successful,
         totalFailed: acc.totalFailed + curr.failed,
         totalSkipped: acc.totalSkipped + curr.skipped,
-        detailedFailures: acc.detailedFailures.concat(curr.details.slice(0, maxEntries - acc.detailedFailures.length))
+        detailedFailures: acc.detailedFailures.concat(curr.details)
     }), {
         totalCases: 0,
         totalSuccessful: 0,
@@ -51,6 +52,7 @@ async function summarizeResults() {
         detailedFailures: []
     });
 
+    totalSummary.detailedFailures = totalSummary.detailedFailures.slice(0, maxEntries);
     totalSummary.status = totalSummary.totalFailed > 0 ? 'Failure' : 'Success';
 
     console.log(JSON.stringify(totalSummary));

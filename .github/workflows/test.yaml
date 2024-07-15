@@ -42,6 +42,18 @@ jobs:
         env:
           result: ${{ steps.failed-tests-extractor.outputs.detailed_failures }}
 
+      - name: Send custom JSON data to Slack workflow
+        if: success() || failure()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          # This data can be any valid JSON from a previous step in the GitHub Action
+          payload: |
+            {
+              "key": "value",
+              "foo": "bar"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - uses: actions/upload-artifact@v4
         if: success() || failure()
