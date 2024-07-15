@@ -33,6 +33,9 @@ outputs:
   detailed_failures:
     description: 'JSON formatted details of failed tests(array of objects)'
     value: ${{ steps.results.outputs.detailed_failures }}
+  detailed_failures_for_slack:
+    description: 'JSON formatted details of failed tests for Slack'
+    value: ${{ steps.results.outputs.detailed_failures_for_slack }}
 
 runs:
   using: 'composite'
@@ -66,6 +69,7 @@ runs:
         echo "total_skipped=$(echo $JSON_OUTPUT | jq -r '.totalSkipped')" >> $GITHUB_ENV
         echo "status=$(echo $JSON_OUTPUT | jq -r '.status')" >> $GITHUB_ENV
         echo "detailed_failures=$(echo $JSON_OUTPUT | jq -c '.detailedFailures')" >> $GITHUB_ENV
+        echo "detailed_failures_for_slack=$(echo $JSON_OUTPUT | jq -c '.detailedFailuresForSlack')" >> $GITHUB_ENV
       shell: bash
       working-directory: ${{ github.workspace }}
       env:

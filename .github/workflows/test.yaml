@@ -93,7 +93,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "${{ env.detailed_failures}}"
+                        "text": "${{ env.detailed_failures_for_slack }}"
                       }
                     }
                   ]
