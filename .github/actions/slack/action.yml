@@ -56,8 +56,8 @@ runs:
       id: failed-tests-extractor
       uses: ./.github/actions/failed-tests-extractor
       with:
-        max_entries: 20
-        xml_pattern: 'build/test-results/test/**/*.xml'
+        max-entries: 20
+        xml-pattern: 'build/test-results/test/**/*.xml'
 
     - name: Send message
       id: slack
@@ -120,14 +120,14 @@ runs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "*Passed:* ${{ steps.failed-tests-extractor.outputs.total_successful }} *Failed:* ${{ steps.failed-tests-extractor.outputs.total_failed }} *Skipped:* ${{ steps.failed-tests-extractor.outputs.total_skipped }} / *Duration:* ${{ steps.prepare.outputs.elapsed_time }}"
+                      "text": "*Passed:* ${{ steps.failed-tests-extractor.outputs.total-successful }} *Failed:* ${{ steps.failed-tests-extractor.outputs.total-failed }} *Skipped:* ${{ steps.failed-tests-extractor.outputs.total-skipped }} / *Duration:* ${{ steps.prepare.outputs.elapsed_time }}"
                     }
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": ${{ steps.failed-tests-extractor.outputs.detailed_failures_for_slack }}
+                      "text": ${{ steps.failed-tests-extractor.outputs.detailed-failures-for-slack }}
                     }
                   }
                 ]

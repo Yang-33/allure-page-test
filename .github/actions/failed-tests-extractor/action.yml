@@ -5,37 +5,37 @@ inputs:
     description: 'Node.js version to set up'
     required: false
     default: '20'
-  max_entries:
+  max-entries:
     description: 'Maximum number of failed tests to output'
     required: false
     default: '20'
-  xml_pattern:
+  xml-pattern:
     description: 'Glob pattern for finding XML files'
     required: true
     default: 'build/test-results/test/**/*.xml'
 
 outputs:
-  total_cases:
+  total-cases:
     description: 'Total number of test cases processed'
-    value: ${{ steps.results.outputs.total_cases }}
-  total_successful:
+    value: ${{ steps.results.outputs.total-cases }}
+  total-successful:
     description: 'Total number of successful test cases'
-    value: ${{ steps.results.outputs.total_successful }}
-  total_failed:
+    value: ${{ steps.results.outputs.total-successful }}
+  total-failed:
     description: 'Total number of failed test cases'
-    value: ${{ steps.results.outputs.total_failed }}
-  total_skipped:
+    value: ${{ steps.results.outputs.total-failed }}
+  total-skipped:
     description: 'Total number of skipped test cases'
-    value: ${{ steps.results.outputs.total_skipped }}
+    value: ${{ steps.results.outputs.total-skipped }}
   status:
     description: 'Overall status of the tests (Success or Failure)'
     value: ${{ steps.results.outputs.status }}
-  detailed_failures:
+  detailed-failures:
     description: 'JSON formatted details of failed tests(array of objects)'
-    value: ${{ steps.results.outputs.detailed_failures }}
-  detailed_failures_for_slack:
+    value: ${{ steps.results.outputs.detailed-failures }}
+  detailed-failures-for-slack:
     description: 'JSON formatted details of failed tests for Slack'
-    value: ${{ steps.results.outputs.detailed_failures_for_slack }}
+    value: ${{ steps.results.outputs.detailed-failures-for-slack }}
 
 runs:
   using: 'composite'
@@ -63,13 +63,13 @@ runs:
       id: results
       run: |
         JSON_OUTPUT=$(node .github/actions/failed-tests-extractor/script.js)
-        echo "total_cases=$(echo $JSON_OUTPUT | jq -r '.totalCases')" >> $GITHUB_OUTPUT
-        echo "total_successful=$(echo $JSON_OUTPUT | jq -r '.totalSuccessful')" >> $GITHUB_OUTPUT
-        echo "total_failed=$(echo $JSON_OUTPUT | jq -r '.totalFailed')" >> $GITHUB_OUTPUT
-        echo "total_skipped=$(echo $JSON_OUTPUT | jq -r '.totalSkipped')" >> $GITHUB_OUTPUT
+        echo "total-cases=$(echo $JSON_OUTPUT | jq -r '.totalCases')" >> $GITHUB_OUTPUT
+        echo "total-successful=$(echo $JSON_OUTPUT | jq -r '.totalSuccessful')" >> $GITHUB_OUTPUT
+        echo "total-failed=$(echo $JSON_OUTPUT | jq -r '.totalFailed')" >> $GITHUB_OUTPUT
+        echo "total-skipped=$(echo $JSON_OUTPUT | jq -r '.totalSkipped')" >> $GITHUB_OUTPUT
         echo "status=$(echo $JSON_OUTPUT | jq -r '.status')" >> $GITHUB_OUTPUT
-        echo "detailed_failures=$(echo $JSON_OUTPUT | jq -c '.detailedFailures')" >> $GITHUB_OUTPUT
-        echo "detailed_failures_for_slack=$(echo $JSON_OUTPUT | jq -c '.detailedFailuresForSlack')" >> $GITHUB_OUTPUT
+        echo "detailed-failures=$(echo $JSON_OUTPUT | jq -c '.detailedFailures')" >> $GITHUB_OUTPUT
+        echo "detailed-failures-for-slack=$(echo $JSON_OUTPUT | jq -c '.detailedFailuresForSlack')" >> $GITHUB_OUTPUT
       shell: bash
       working-directory: ${{ github.workspace }}
       env:
