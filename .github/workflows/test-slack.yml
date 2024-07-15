@@ -1,0 +1,62 @@
+name: slack test
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  test:
+    concurrency:
+      group: beta-test
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Send custom JSON data to Slack workflow
+        if: success() || failure()
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          channel-id: 'notify-test'
+          payload: |
+            {
+              "attachments": [
+                {
+                  "color": "green",
+                  "blocks": [
+                    {
+                      "type": "header",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "[${{ github.repository }}] ${{ env.STATUS }}",
+                        "emoji": true
+                      }
+                    },
+                    {
+                      "type": "section",
+                      "fields": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Job Url:*\n${{ env.RUN_URL }}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Ref:*\n${{ github.ref_name }}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Changes:*\n${{ env.CHANGES_LINK || 'N/A' }}"
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Author:*\n<${{ github.server_url }}/${{ github.actor }}|${{ github.actor }}>"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{github.repository}}/actions/runs/${{ github.run_id }}
