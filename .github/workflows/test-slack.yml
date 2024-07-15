@@ -45,37 +45,15 @@ jobs:
                     {
                       "type": "mrkdwn",
                       "text": "*Reason:*\nAll vowel keys aren't working."
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "*Specs:*\ncom.example.project.CalculatorTests - 1 + 100 = 102 0.01 sec\n com.example.project.CalculatorTests - 2 + 100 = 102 0.01 sec \n com.example.project.CalculatorTests - 3 + 100 = 102 0.01 sec \n com.long.test.name.HogeHogeHoge.long.long.long.long.long.long - aaaa adf sdfasd fasdf sadf asdfs dsa d 1 min 0 sec."
                     }
                   ]
                 },
                 {
-                  "type": "actions",
-                  "elements": [
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "emoji": true,
-                        "text": "Approve"
-                      },
-                      "style": "primary",
-                      "value": "click_me_123"
-                    },
-                    {
-                      "type": "button",
-                      "text": {
-                        "type": "plain_text",
-                        "emoji": true,
-                        "text": "Deny"
-                      },
-                      "style": "danger",
-                      "value": "click_me_123"
-                    }
-                  ]
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Specs:*\n• com.example.project.CalculatorTests - 1 + 100 = 102 0.01 sec\n• com.example.project.CalculatorTests - 2 + 100 = 102 0.01 sec\n• com.example.project.CalculatorTests - 3 + 100 = 102 0.01 sec \n• com.long.test.name.HogeHogeHoge.long.long.long.long.long.long - aaaa adf sdfasd fasdf sadf asdfs dsa d 1 min 0 sec."
+
                 }
               ]
             }
