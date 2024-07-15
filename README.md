@@ -13,7 +13,7 @@ This repository demonstrates how to use GitHub Pages to display test results for
 
 #### samples
 - top: https://yang-33.github.io/allure-page-test/
-- sub(beta): https://yang-33.github.io/allure-page-test/bet
+- sub(beta): https://yang-33.github.io/allure-page-test/beta
 - sub(staging): https://yang-33.github.io/allure-page-test/staging
 
 
