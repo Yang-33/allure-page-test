@@ -48,6 +48,7 @@ runs:
         echo "REPOSITORY_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 2)" >> $GITHUB_ENV
 
     - name: Report failed tests
+      id: failed-tests-extractor
       uses: ./.github/actions/failed-tests-extractor
 
     - name: Send message
@@ -111,14 +112,14 @@ runs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "*Passed:* ${{ env.total_successful }} *Failed:* ${{ env.total_failed }} *Skipped:* ${{ env.total_skipped }}"
+                      "text": "*Passed:* ${{ steps.failed-tests-extractor.total_successful }} *Failed:* ${{ steps.failed-tests-extractor.total_failed }} *Skipped:* ${{ steps.failed-tests-extractor.total_skipped }}"
                     }
                   },
                   {
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": ${{ env.detailed_failures_for_slack }}
+                      "text": ${{ steps.failed-tests-extractor.detailed_failures_for_slack }}
                     }
                   }
                 ]
