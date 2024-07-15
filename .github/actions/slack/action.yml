@@ -63,7 +63,7 @@ runs:
       uses: slackapi/slack-github-action@70cd7be8e40a46e8b0eced40b0de447bdb42f68e # v1.26.0
       env:
         SLACK_BOT_TOKEN: ${{ inputs.slack-token }}
-        RUN_URL: ${{ github.server_url }}/${ {github.repository }}/actions/runs/${{ github.run_id }}
+        RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         ATTACHMENT_COLOR: ${{ inputs.status == 'success' && '#42d647' || inputs.status == 'failure' && '#c92626' || inputs.status == 'cancelled' && '#9d9d9d' || '#6a8fe6' }}
         STATUS: ${{ inputs.status == 'success' && 'Completed :circle-check:' || inputs.status == 'failure' && 'Failed :circle-xmark:' || inputs.status == 'cancelled' && 'Cancelled :minus-red:' || 'Running :loading_pulse:' }}
         CHANGES_LINK: ${{ github.event.compare && format('<{0}|{1}...{2}>', github.event.compare, steps.prepare.outputs.SHORT_BEFORE, steps.prepare.outputs.SHORT_AFTER) || '' }}
