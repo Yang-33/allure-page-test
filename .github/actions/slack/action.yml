@@ -61,6 +61,9 @@ runs:
     - name: Collect test stats
       id: failed-tests-extractor
       uses: ./.github/actions/failed-tests-extractor
+      with:
+        max_entries: 20
+        xml_pattern: 'build/test-results/test/**/*.xml'
 
     - name: Send message
       id: slack
