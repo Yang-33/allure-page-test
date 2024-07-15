@@ -103,7 +103,7 @@ runs:
                       },
                       {
                         "type": "mrkdwn",
-                        "text": "another URLs"
+                        "text": "*Something*\nanother URLs"
                       }
                     ]
                   },

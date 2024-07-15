@@ -17,28 +17,18 @@ jobs:
           distribution: 'oracle'
           java-version: '17'
       - name: test
+        id: test
         run: ./gradlew clean test
 
-      - name: check build directory
+      - name: Notify test results with urls to Slack
         if: success() || failure()
-        run: ls -la build
-
-      - name: check build directory
-        if: success() || failure()
-        run: ls -la build/test-results
-
-      - name: check build directory
-        if: success() || failure()
-        run: ls -la build/test-results/test
-
-      - name: Report failed tests
-        if: success() || failure()
-        id: failed-tests-extractor
-        uses: ./.github/actions/failed-tests-extractor
-
-      - name: check output
-        if: success() || failure()
-        run: echo "${{ env.failed_tests }}"
+        uses: ./.github/actions/slack
+        with:
+          channel-id: 'notify-test'
+          status: ${{ steps.test.outcome }}
+          title: 'Test results STAGING'
+          slack-token: ${{ secrets.SLACK_BOT_TOKEN }}
+          env: staging
 
       - uses: actions/upload-artifact@v4
         if: success() || failure()
