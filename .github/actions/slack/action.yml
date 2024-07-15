@@ -1,0 +1,133 @@
+name: Slack notification with test results
+description: 'Send custom JSON data to Slack workflow'
+
+
+inputs:
+  channel-id:
+    description: "Slack channel ID"
+    required: true
+    type: string
+  update-ts:
+    description: "Timestamp of the message to update"
+    required: false
+    type: string
+  status:
+    description: "Status of the workflow, success or failure"
+    required: true
+    type: string
+  title:
+    description: "Title of the message"
+    required: false
+    type: string
+  slack-token:
+    description: "Slack bot token"
+    required: true
+    type: string
+  env:
+    description: "Test environment"
+    required: true
+    type: string
+
+outputs:
+  ts:
+    description: "Timestamp of the sent message"
+    value: ${{ steps.slack.outputs.ts }}
+  channel-id:
+    description: "Channel ID of the sent message"
+    value: ${{ steps.slack.outputs.channel_id }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Prepare
+      id: prepare
+      shell: bash
+      run: |
+        echo "SHORT_BEFORE=$(echo ${{ github.event.before }} | cut -c1-8)" >> $GITHUB_ENV
+        echo "SHORT_AFTER=$(echo ${{ github.event.after }} | cut -c1-8)" >> $GITHUB_ENV
+        echo "REPOSITORY_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 2)" >> $GITHUB_ENV
+
+    - name: Report failed tests
+      uses: ./.github/actions/failed-tests-extractor
+
+    - name: Send message
+      id: slack
+      uses: slackapi/slack-github-action@70cd7be8e40a46e8b0eced40b0de447bdb42f68e # v1.26.0
+      env:
+        SLACK_BOT_TOKEN: ${{ inputs.slack-token }}
+        RUN_URL: ${{ github.server_url }}/${{github.repository}}/actions/runs/${{ github.run_id }}
+        ATTACHMENT_COLOR: ${{ inputs.status == 'success' && '#42d647' || inputs.status == 'failure' && '#c92626' || inputs.status == 'cancelled' && '#9d9d9d' || '#6a8fe6' }}
+        STATUS: ${{ inputs.status == 'success' && 'Completed :circle-check:' || inputs.status == 'failure' && 'Failed :circle-xmark:' || inputs.status == 'cancelled' && 'Cancelled :minus-red:' || 'Running :loading_pulse:' }}
+        CHANGES_LINK: ${{ github.event.compare && format('<{0}|{1}...{2}>', github.event.compare, env.SHORT_BEFORE, env.SHORT_AFTER) || '' }}
+        TITLE: ${{ inputs.title }}
+        ALLURE_URL: https://${{ github.repository_owner }}.github.io/${{ env.REPOSITORY_NAME }}/${{ inputs.env }}/${{ github.run_number }}
+      with:
+        channel-id: ${{ inputs.channel-id }}
+        update-ts: ${{ inputs.update-ts }}
+        payload: |
+          {
+            "attachments": [
+              {
+                "color": "${{ env.ATTACHMENT_COLOR }}",
+                "blocks": [
+                  {
+                    "type": "header",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "[${{ github.repository }}] ${{ env.STATUS }}",
+                      "emoji": true
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Run:*\n<${{env.RUN_URL}}|:github: ${{ env.TITLE }} #${{github.run_number}}${{ github.run_attempt != 1 && format(' (Attempt #{0})', github.run_attempt) || '' }}>"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Ref:*\n${{ github.ref_name }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Changes:*\n${{ env.CHANGES_LINK || 'N/A' }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Author:*\n<${{ github.server_url }}/${{ github.actor }}|${{ github.actor }}>"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Allure*\n<${{ env.ALLURE_URL }}|:allure: Allure ${{ inputs.env }} #${{ github.run_number }}>"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "another URLs"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": "*Passed:* ${{ env.total_successful }} *Failed:* ${{ env.total_failed }} *Skipped:* ${{ env.total_skipped }}"
+                    }
+                  },
+                  {
+                    "type": "section",
+                    "text": {
+                      "type": "mrkdwn",
+                      "text": ${{ env.detailed_failures_for_slack }}
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+
+    - name: Set outputs
+      shell: bash
+      run: |
+        echo "ts=${{ steps.slack.outputs.ts }}" >> $GITHUB_OUTPUT
+        echo "channel-id=${{ steps.slack.outputs.channel_id }}" >> $GITHUB_OUTPUT
