@@ -6,9 +6,6 @@ on:
 
 jobs:
   test:
-    concurrency:
-      group: beta-test
-      cancel-in-progress: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
