@@ -63,13 +63,13 @@ runs:
       id: results
       run: |
         JSON_OUTPUT=$(node .github/actions/failed-tests-extractor/script.js)
-        echo "total_cases=$(echo $JSON_OUTPUT | jq -r '.totalCases')" >> $GITHUB_ENV
-        echo "total_successful=$(echo $JSON_OUTPUT | jq -r '.totalSuccessful')" >> $GITHUB_ENV
-        echo "total_failed=$(echo $JSON_OUTPUT | jq -r '.totalFailed')" >> $GITHUB_ENV
-        echo "total_skipped=$(echo $JSON_OUTPUT | jq -r '.totalSkipped')" >> $GITHUB_ENV
-        echo "status=$(echo $JSON_OUTPUT | jq -r '.status')" >> $GITHUB_ENV
-        echo "detailed_failures=$(echo $JSON_OUTPUT | jq -c '.detailedFailures')" >> $GITHUB_ENV
-        echo "detailed_failures_for_slack=$(echo $JSON_OUTPUT | jq -c '.detailedFailuresForSlack')" >> $GITHUB_ENV
+        echo "total_cases=$(echo $JSON_OUTPUT | jq -r '.totalCases')" >> $GITHUB_OUTPUT
+        echo "total_successful=$(echo $JSON_OUTPUT | jq -r '.totalSuccessful')" >> $GITHUB_OUTPUT
+        echo "total_failed=$(echo $JSON_OUTPUT | jq -r '.totalFailed')" >> $GITHUB_OUTPUT
+        echo "total_skipped=$(echo $JSON_OUTPUT | jq -r '.totalSkipped')" >> $GITHUB_OUTPUT
+        echo "status=$(echo $JSON_OUTPUT | jq -r '.status')" >> $GITHUB_OUTPUT
+        echo "detailed_failures=$(echo $JSON_OUTPUT | jq -c '.detailedFailures')" >> $GITHUB_OUTPUT
+        echo "detailed_failures_for_slack=$(echo $JSON_OUTPUT | jq -c '.detailedFailuresForSlack')" >> $GITHUB_OUTPUT
       shell: bash
       working-directory: ${{ github.workspace }}
       env:

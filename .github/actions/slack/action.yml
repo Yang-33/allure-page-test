@@ -43,12 +43,12 @@ runs:
       id: prepare
       shell: bash
       run: |
-        echo "SHORT_BEFORE=$(echo ${{ github.event.before }} | cut -c1-8)" >> $GITHUB_ENV
-        echo "SHORT_AFTER=$(echo ${{ github.event.after }} | cut -c1-8)" >> $GITHUB_ENV
-        echo "REPOSITORY_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 2)" >> $GITHUB_ENV
+        echo "SHORT_BEFORE=$(echo ${{ github.event.before }} | cut -c1-8)" >> $GITHUB_OUTPUT
+        echo "SHORT_AFTER=$(echo ${{ github.event.after }} | cut -c1-8)" >> $GITHUB_OUTPUT
+        echo "REPOSITORY_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 2)" >> $GITHUB_OUTPUT
         .github/scripts/get_workflow_elapsed_time.sh ${{ github.run_id }}
 
-    - name: Report failed tests
+    - name: Collect test stats
       id: failed-tests-extractor
       uses: ./.github/actions/failed-tests-extractor
 
