@@ -3,7 +3,8 @@ description: 'Setup Node.js and run a script'
 inputs:
   node-version:
     description: 'Node.js version to set up'
-    required: true
+    required: false
+    default: '20'
   max_entries:
     description: 'Maximum number of failed tests to output'
     required: false
