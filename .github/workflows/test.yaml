@@ -86,7 +86,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "*Passed:*${{ env.total_successful }} *Failed:*\n${{ env.failed_tests }} *Skipped:*\n${{ env.total_skipped }}"
+                        "text": "*Passed:* ${{ env.total_successful }} *Failed:* ${{ env.total_failed }} *Skipped:* ${{ env.total_skipped }}"
                       }
                     },
                     {
