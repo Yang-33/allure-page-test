@@ -53,7 +53,6 @@ async function summarizeResults() {
     });
 
     totalSummary.detailedFailures = totalSummary.detailedFailures.slice(0, maxEntries);
-    // totalSummary.detailedFailuresWithEscape = JSON.stringify(totalSummary.detailedFailures).replace(/"/g, '\\"');
     totalSummary.detailedFailuresForSlack = totalSummary.detailedFailures.map(item => `\n• ${item.name} - ${item.time}`).join(' ');
     totalSummary.status = totalSummary.totalFailed > 0 ? 'Failure' : 'Success';
 
