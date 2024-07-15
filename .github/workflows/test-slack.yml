@@ -53,7 +53,7 @@ jobs:
                   "text": {
                     "type": "mrkdwn",
                     "text": "*Specs:*\n• com.example.project.CalculatorTests - 1 + 100 = 102 0.01 sec\n• com.example.project.CalculatorTests - 2 + 100 = 102 0.01 sec\n• com.example.project.CalculatorTests - 3 + 100 = 102 0.01 sec \n• com.long.test.name.HogeHogeHoge.long.long.long.long.long.long - aaaa adf sdfasd fasdf sadf asdfs dsa d 1 min 0 sec."
-
+                  }
                 }
               ]
             }
