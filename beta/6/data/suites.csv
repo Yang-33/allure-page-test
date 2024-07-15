@@ -1,8 +1,0 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"failed","Mon Jul 15 06:26:08 GMT 2024","Mon Jul 15 06:26:08 GMT 2024","2","","com.example.project.CalculatorTests","","com.example.project.CalculatorTests","1 + 1 = 2","1 + 1 = 2()",""
-"failed","Mon Jul 15 06:26:08 GMT 2024","Mon Jul 15 06:26:08 GMT 2024","2","","com.example.project.HogeTest","","com.example.project.HogeTest","hoge + hoge = hogehoge","hoge + hoge = hogehoge()",""
-"passed","Mon Jul 15 06:26:08 GMT 2024","Mon Jul 15 06:26:08 GMT 2024","46","","com.example.project.CalculatorTests","","com.example.project.CalculatorTests","divisionByZeroError","divisionByZeroError()",""
-"failed","Mon Jul 15 06:26:08 GMT 2024","Mon Jul 15 06:26:08 GMT 2024","12","","com.example.project.CalculatorTests","","com.example.project.CalculatorTests","add","add(int, int, int) 1 + 100 = 102",""
-"passed","Mon Jul 15 06:26:08 GMT 2024","Mon Jul 15 06:26:08 GMT 2024","71","","com.example.project.CalculatorTests","","com.example.project.CalculatorTests","add","add(int, int, int) 0 + 1 = 1",""
-"passed","Mon Jul 15 06:26:08 GMT 2024","Mon Jul 15 06:26:08 GMT 2024","2","","com.example.project.CalculatorTests","","com.example.project.CalculatorTests","add","add(int, int, int) 49 + 51 = 100",""
-"passed","Mon Jul 15 06:26:08 GMT 2024","Mon Jul 15 06:26:08 GMT 2024","2","","com.example.project.CalculatorTests","","com.example.project.CalculatorTests","add","add(int, int, int) 1 + 2 = 3",""
