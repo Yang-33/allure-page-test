@@ -16,6 +16,7 @@ inputs:
 outputs:
   failed_tests:
     description: 'JSON formatted summary of failed tests'
+    value: ${{ steps.results.outputs.failed_tests }}
 
 runs:
   using: 'composite'
@@ -28,23 +29,23 @@ runs:
       run: npm ci
       shell: bash
       working-directory: ./.github/actions/failed-tests-extractor
-    - name: Set Environment Variables
-      run: |
-        echo "MAX_ENTRIES=${{ inputs.max_entries }}" >> $GITHUB_ENV
-        echo "XML_PATTERN=${{ inputs.xml_pattern }}" >> $GITHUB_ENV
-      shell: bash
+
     - name: Output results (debug)
       id: results-debug
       run: node .github/actions/failed-tests-extractor/script.js
       shell: bash
-      working-directory: ${{ github.workspace }} # スクリプト実行ディレクトリをプロジェクトのルートに設定
+      working-directory: ${{ github.workspace }}
       env:
         NODE_PATH: ${{ github.workspace }}/.github/actions/failed-tests-extractor/node_modules
+        MAX_ENTRIES: ${{ inputs.max_entries }}
+        XML_PATTERN: ${{ inputs.xml_pattern }}
 
     - name: Output results
       id: results
       run: echo "failed_tests=$(node .github/actions/failed-tests-extractor/script.js)" >> $GITHUB_ENV
       shell: bash
-      working-directory: ${{ github.workspace }} # スクリプト実行ディレクトリをプロジェクトのルートに設定
+      working-directory: ${{ github.workspace }}
       env:
         NODE_PATH: ${{ github.workspace }}/.github/actions/failed-tests-extractor/node_modules
+        MAX_ENTRIES: ${{ inputs.max_entries }}
+        XML_PATTERN: ${{ inputs.xml_pattern }}
