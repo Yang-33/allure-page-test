@@ -52,8 +52,13 @@ async function summarizeResults() {
         detailedFailures: []
     });
 
+    const totalFailures = totalSummary.detailedFailures.length;
     totalSummary.detailedFailures = totalSummary.detailedFailures.slice(0, maxEntries);
     totalSummary.detailedFailuresForSlack = totalSummary.detailedFailures.map(item => `\n• ${item.name} - ${item.time}`).join(' ');
+    if (totalFailures > maxEntries) {
+        totalSummary.detailedFailuresForSlack += '\n• and more...';
+    }
+
     totalSummary.status = totalSummary.totalFailed > 0 ? 'Failure' : 'Success';
 
     console.log(JSON.stringify(totalSummary));
