@@ -79,7 +79,12 @@ jobs:
                         {
                           "type": "mrkdwn",
                           "text": "*Author:*\n<${{ github.server_url }}/${{ github.actor }}|${{ github.actor }}>"
-                        }
+                        },
+                        {
+                          "type": "mrkdwn",
+                          "text": "*Allure:*\n<https://${{ github.repository_owner }}.github.io/${{ env.REPOSITORY_NAME }}/beta/${{ github.run_number }}|allure beta #${{ github.run_number }}"
+                        },
+
                       ]
                     },
                     {
