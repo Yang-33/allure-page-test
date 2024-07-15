@@ -33,7 +33,6 @@ jobs:
           title: 'Test results BETA'
           slack-token: ${{ secrets.SLACK_BOT_TOKEN }}
           env: beta
-          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         if: success() || failure()
