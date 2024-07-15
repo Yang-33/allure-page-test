@@ -51,7 +51,7 @@ jobs:
             {
               "attachments": [
                 {
-                  "color": "green",
+                  "color": "#42d647",
                   "blocks": [
                     {
                       "type": "header",
@@ -81,6 +81,20 @@ jobs:
                           "text": "*Author:*\n<${{ github.server_url }}/${{ github.actor }}|${{ github.actor }}>"
                         }
                       ]
+                    },
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "*Passed:*${{ env.total_successful }} *Failed:*\n${{ env.failed_tests }} *Skipped:*\n${{ env.total_skipped }}"
+                      }
+                    },
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "${{ env.detailed_failures}}"
+                      }
                     }
                   ]
                 }
