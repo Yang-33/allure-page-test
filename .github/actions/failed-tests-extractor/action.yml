@@ -14,9 +14,24 @@ inputs:
     default: 'build/test-results/test/**/*.xml'
 
 outputs:
-  failed_tests:
-    description: 'JSON formatted summary of failed tests'
-    value: ${{ steps.results.outputs.failed_tests }}
+  total_cases:
+    description: 'Total number of test cases processed'
+    value: ${{ steps.results.outputs.total_cases }}
+  total_successful:
+    description: 'Total number of successful test cases'
+    value: ${{ steps.results.outputs.total_successful }}
+  total_failed:
+    description: 'Total number of failed test cases'
+    value: ${{ steps.results.outputs.total_failed }}
+  total_skipped:
+    description: 'Total number of skipped test cases'
+    value: ${{ steps.results.outputs.total_skipped }}
+  status:
+    description: 'Overall status of the tests (Success or Failure)'
+    value: ${{ steps.results.outputs.status }}
+  detailed_failures:
+    description: 'JSON formatted details of failed tests(array of objects)'
+    value: ${{ steps.results.outputs.detailed_failures }}
 
 runs:
   using: 'composite'
@@ -42,7 +57,14 @@ runs:
 
     - name: Output results
       id: results
-      run: echo "failed_tests=$(node .github/actions/failed-tests-extractor/script.js)" >> $GITHUB_ENV
+      run: |
+        JSON_OUTPUT=$(node .github/actions/failed-tests-extractor/script.js)
+        echo "total_cases=$(echo $JSON_OUTPUT | jq -r '.totalCases')" >> $GITHUB_ENV
+        echo "total_successful=$(echo $JSON_OUTPUT | jq -r '.totalSuccessful')" >> $GITHUB_ENV
+        echo "total_failed=$(echo $JSON_OUTPUT | jq -r '.totalFailed')" >> $GITHUB_ENV
+        echo "total_skipped=$(echo $JSON_OUTPUT | jq -r '.totalSkipped')" >> $GITHUB_ENV
+        echo "status=$(echo $JSON_OUTPUT | jq -r '.status')" >> $GITHUB_ENV
+        echo "detailed_failures=$(echo $JSON_OUTPUT | jq -c '.detailedFailures')" >> $GITHUB_ENV
       shell: bash
       working-directory: ${{ github.workspace }}
       env:
