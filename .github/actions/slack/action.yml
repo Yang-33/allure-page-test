@@ -46,6 +46,7 @@ runs:
         echo "SHORT_BEFORE=$(echo ${{ github.event.before }} | cut -c1-8)" >> $GITHUB_ENV
         echo "SHORT_AFTER=$(echo ${{ github.event.after }} | cut -c1-8)" >> $GITHUB_ENV
         echo "REPOSITORY_NAME=$(echo ${{ github.repository }} | cut -d '/' -f 2)" >> $GITHUB_ENV
+        .github/scripts/get_workflow_elapsed_time.sh ${{ github.run_id }}
 
     - name: Report failed tests
       id: failed-tests-extractor
@@ -59,9 +60,10 @@ runs:
         RUN_URL: ${{ github.server_url }}/${{github.repository}}/actions/runs/${{ github.run_id }}
         ATTACHMENT_COLOR: ${{ inputs.status == 'success' && '#42d647' || inputs.status == 'failure' && '#c92626' || inputs.status == 'cancelled' && '#9d9d9d' || '#6a8fe6' }}
         STATUS: ${{ inputs.status == 'success' && 'Completed :circle-check:' || inputs.status == 'failure' && 'Failed :circle-xmark:' || inputs.status == 'cancelled' && 'Cancelled :minus-red:' || 'Running :loading_pulse:' }}
-        CHANGES_LINK: ${{ github.event.compare && format('<{0}|{1}...{2}>', github.event.compare, env.SHORT_BEFORE, env.SHORT_AFTER) || '' }}
+        CHANGES_LINK: ${{ github.event.compare && format('<{0}|{1}...{2}>', github.event.compare, steps.prepare.SHORT_BEFORE, steps.prepare.SHORT_AFTER) || '' }}
         TITLE: ${{ inputs.title }}
-        ALLURE_URL: https://${{ github.repository_owner }}.github.io/${{ env.REPOSITORY_NAME }}/${{ inputs.env }}/${{ github.run_number }}
+        ALLURE_URL: https://${{ github.repository_owner }}.github.io/${{ steps.prepare.REPOSITORY_NAME }}/${{ inputs.env }}/${{ github.run_number }}
+        ELAPSED_TIME: 1 min 10 sec
       with:
         channel-id: ${{ inputs.channel-id }}
         update-ts: ${{ inputs.update-ts }}
@@ -112,7 +114,7 @@ runs:
                     "type": "section",
                     "text": {
                       "type": "mrkdwn",
-                      "text": "*Passed:* ${{ steps.failed-tests-extractor.total_successful }} *Failed:* ${{ steps.failed-tests-extractor.total_failed }} *Skipped:* ${{ steps.failed-tests-extractor.total_skipped }}"
+                      "text": "*Passed:* ${{ steps.failed-tests-extractor.total_successful }} *Failed:* ${{ steps.failed-tests-extractor.total_failed }} *Skipped:* ${{ steps.failed-tests-extractor.total_skipped }} *Duration:* ${{ steps.prepare.outputs.elapsed_time }}"
                     }
                   },
                   {
